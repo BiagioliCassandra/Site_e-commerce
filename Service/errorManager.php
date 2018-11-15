@@ -7,7 +7,8 @@ function getErrorMessages($codes) {
     "1" => "Certains champs sont vides",
     "2" => "Le nom utilisateur est trop court",
     "3" => "Le mot de passe ne correspond pas à sa confirmation",
-    "4" => "Le mot de passe ne respecte pas les conditions indiquées"
+    "4" => "Le mot de passe ne respecte pas les conditions indiquées",
+    "5" => "Ce nom d'utilisateur est déjà pris"
   ];
   //Démarrage standard du message
   $message = "Nous avons trouvé les erreurs suivantes : ";

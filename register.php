@@ -1,8 +1,10 @@
 <?php
 session_start();
+
 //On charge le header
 require "Service/errorManager.php";
 include "Template/header.php";
+
 //Si un code d'erreur lié à l'enregistrement de l'utilisateur nous a été renvoyé
 if(isset($_GET["message"])) {
   $message = getErrorMessages($_GET["message"]);

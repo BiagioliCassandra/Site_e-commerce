@@ -1,6 +1,7 @@
 <?php
 //On charge le header
 include "Template/header.php";
+
 //Si un message nous a été transmis par l'url on le récupère et on l'affiche
 if(isset($_GET["message"])) {
   $message = htmlspecialchars($_GET["message"]);

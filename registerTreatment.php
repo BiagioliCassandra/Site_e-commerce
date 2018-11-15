@@ -1,4 +1,18 @@
 <?php
+//On se connecte à la base de données
+try
+{
+  $bdd = new PDO('mysql:host=localhost;dbname=Siteecommerce;charset=utf8', 'phpmyadmin', 'AdaLinkLoulouZelda', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+}
+  catch (Exception $e)
+  {
+    die('Erreur : ' . $e->getMessage());
+  }
+
+//Ici il faut faire un if
+$reponse = $bdd->prepare('SELECT userName FROM user WHERE userName = ?');
+$reponse->execute(array($_POST["user_name"]));
+
 //Si le formulaire n'est pas vide on le vérifie
 if(!empty($_POST)) {
   $errors ="";
@@ -33,6 +47,10 @@ if(!empty($_POST)) {
     $errors .= "4";
   }
 
+  if($_POST["user_name"] == $reponse) {
+    $errors .= "5";
+  }
+
   //Si on a stocké des codes erreur on renvoi au formulaire
   if(!empty($errors)){
     session_start();
@@ -42,6 +60,8 @@ if(!empty($_POST)) {
   }
   //Sinon on envoi sur la page de login avec un message de succès
   else {
+    $req = $bdd->prepare('INSERT INTO user(userName, user_password, user_status, user_sexe) VALUE(?, ?, "user", ?)');
+    $req->execute(array($_POST['user_name'], crypt($_POST['user_password']), $_POST['user_sexe']));
     header("Location: index.php?success=Compte créé avec succès, vous pouvez vous connecter");
     exit;
   }

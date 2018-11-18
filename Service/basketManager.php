@@ -16,8 +16,8 @@ function calculateBasket() {
 //}
 //}
 
-function addProductBasket($key) {
-    $product = getProduct($key);
+function addProductBasket($bdd) {
+    $product = getProduct($bdd);
     //On ajoute le produit dans l'entrée "basket" du tableau session
     array_push($_SESSION["basket"], $product);
     //On calcule le nouveau montant du panier

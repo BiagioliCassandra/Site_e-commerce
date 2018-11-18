@@ -21,7 +21,7 @@
   <section class="jumbotron jumbotron-fluid darkBg">
     <div class="container">
       <h1 class="display-4">Simplon commerce</h1>
-      <p class="lead">Un exemple de site intégrant Bootstrap et du PHP sans bases de données</p>
+      <p class="lead">Un exemple de site intégrant Bootstrap et du PHP avec bases de données</p>
     </div>
   </section>
 

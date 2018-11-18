@@ -7,35 +7,39 @@ if(!isset($_SESSION["user"])) {
   exit;
 }
 //On charge les fonctions pour accéder aux données
-require "Model/function.php";
+require "Model/bdd.php";
 include "Template/header.php";
-//On récupère notre produits via la fonction, plus tard celle-ci effectuera une requête en base de données
-$id = intval(htmlspecialchars($_GET["id"]));
-$product = getProduct($id);
- ?>
 
- <div class="row mt-5">
+//On récupère notre produits via la fonction, plus tard celle-ci effectuera une requête en base de données
+$id = htmlspecialchars($_GET["id"]);
+$req = $bdd->prepare('SELECT * FROM product WHERE id = ?');
+$req->execute(array($id));
+$product = $req->fetch(PDO::FETCH_ASSOC);
+?>
+
+<!-- $product = getProduct($id);-->
+  <div class="row mt-5">
     <section class="col-lg-9">
-      <h2><?php echo $product["name"]; ?></h2>
+      <h2><?php echo $product["product_name"]; ?></h2>
       <div class="container-fluide">
-        <?php echo $product["description"]; ?>
+        <?php echo $product["product_description"]; ?>
       </div>
       <div>
-        <span class="badge badge-secondary">Prix : <?php echo $product["price"] ?>€</span>
+        <span class="badge badge-secondary">Prix : <?php echo $product["product_price"] ?>€</span>
         <?php
-        if($product["stock"]) {
+        if($product["product_stock"]) {
           echo "<span class='badge badge-success'>Disponible</span>";
         }
         else {
           echo "<span class='badge badge-danger'>Indisponible</span>";
         }
          ?>
-        <span class="badge badge-secondary">Catégorie : <?php echo $product["category"] ?></span>
-        <span class="badge badge-secondary">Lieu de production :<?php echo $product["made_in"] ?></span>
+        <span class="badge badge-secondary">Catégorie : <?php echo $product["product_category"] ?></span>
+        <span class="badge badge-secondary">Lieu de production :<?php echo $product["product_madeIn"] ?></span>
       </div>
       <?php
         //Si le produit est disponible on met un boutton d'ajout au panier
-        if($product["stock"]) {
+        if($product["product_stock"]) {
           echo "<a href='baskettreatment.php?key=". $id . "&action=add' class='btn lightBg my-3'>Ajouter au panier</a>";
         }
        ?>

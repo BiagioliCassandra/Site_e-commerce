@@ -17,12 +17,12 @@ if(isset($_GET["success"])) {
 
 <form class="w-50 mx-auto my-5" action="login.php" method="post">
   <div class="form-group">
-    <label for="userName">Votre nom</label>
-    <input type="text" class="form-control" id="userName" name="user_name" required>
+    <label for="user_name">Votre nom</label>
+    <input type="text" class="form-control" id="user_name" name="user_name" required>
   </div>
   <div class="form-group">
-    <label for="userPassword">Votre mot de passe</label>
-    <input type="password" class="form-control" id="userPassword" name="user_password" required>
+    <label for="user_password">Votre mot de passe</label>
+    <input type="password" class="form-control" id="user_password" name="user_password" required>
   </div>
   <button type="submit" class="btn lightBg">Se connecter</button>
   <a href="register.php" class="btn btn-warning">Pas encore de compte</a>

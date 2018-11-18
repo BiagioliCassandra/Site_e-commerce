@@ -1,17 +1,8 @@
 <?php
-//On se connecte à la base de données
-try
-{
-  $bdd = new PDO('mysql:host=localhost;dbname=Siteecommerce;charset=utf8', 'phpmyadmin', 'AdaLinkLoulouZelda', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-}
-  catch (Exception $e)
-  {
-    die('Erreur : ' . $e->getMessage());
-  }
+require("Model/bdd.php");
 
-$reponses = $bdd->query('SELECT userName, user_password FROM user');
+$reponses = $bdd->query('SELECT * FROM user');
 $reponse = $reponses->fetchall();
-
 //On vérifie si le formulaire a été rempli
 if(!empty($_POST)) {
   //On nettoie les entrées du formulaire
@@ -20,7 +11,7 @@ if(!empty($_POST)) {
   }
   //On vérifie si on trouve une correspondance avec les infromations du formulaire
   foreach ($reponse as $key => $user) {
-    if($user["userName"] === $_POST["user_name"] && $user["user_password"] === $_POST["user_password"]) {
+    if($user["userName"] === $_POST["user_name"] && password_verify($_POST["user_password"], $user["user_password"])) {
       //Si c'est le cas on démarre une session pour y stocker les informations de l'utilisateur
       session_start();
       $_SESSION["user"] = $user;
@@ -31,12 +22,12 @@ if(!empty($_POST)) {
       exit;
     }
   }
-  header("Location: index.php?message=Nous n'avons aucun utilisateur avec ce nom ou ce mot de passe");
+  //header("Location: index.php?message=Nous n'avons aucun utilisateur avec ce nom ou ce mot de passe");
   exit;
 }
 //Si le formulaire n'est pas rempli on renvoie l'utilisateur sur la page de login avce un message
 else {
-  header("Location: index.php?message=Vous devez remplir les champs du formulaire");
+  //header("Location: index.php?message=Vous devez remplir les champs du formulaire");
   exit;
 }
 

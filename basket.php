@@ -8,6 +8,12 @@ if(!isset($_SESSION["user"])) {
 }
 
 include "Template/header.php";
+require("Model/bdd.php");
+
+$id = htmlspecialchars($_GET["id"]);
+$req = $bdd->prepare('SELECT * FROM product WHERE id = ?');
+$req->execute(array($id));
+$product = $req->fetch(PDO::FETCH_ASSOC);
 
 //Si une confirmation de succès pour un retrait de produit
 if(isset($_GET["success"])) {
@@ -28,13 +34,13 @@ if(isset($_GET["success"])) {
           <article class="col-lg-6 my-4">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><?php echo $product["name"] ?></h5>
-                <p class="card-text"><?php echo $product["description"] ?></p>
+                <h5 class="card-title"><?php echo $product["product_name"] ?></h5>
+                <p class="card-text"><?php echo $product["product_description"] ?></p>
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Prix : <?php echo $product["price"] ?></li>
-                <li class="list-group-item">Lieu de production: <?php echo $product["made_in"] ?></li>
-                <li class="list-group-item">Catégorie : <?php echo $product["category"] ?></li>
+                <li class="list-group-item">Prix : <?php echo $product["product_price"] ?></li>
+                <li class="list-group-item">Lieu de production: <?php echo $product["product_made_in"] ?></li>
+                <li class="list-group-item">Catégorie : <?php echo $product["product_category"] ?></li>
               </ul>
               <div class="card-body">
                 <!-- Lien pour retirer un produit du panier -->
